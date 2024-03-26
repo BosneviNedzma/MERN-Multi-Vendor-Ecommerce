@@ -10,3 +10,6 @@ export default function LargeCard({}) {
     </div>
   );
 }
+
+
+budalaaaaaaaaaaaaaaa saaaaaaaaaaam hauifhawugfuwq
