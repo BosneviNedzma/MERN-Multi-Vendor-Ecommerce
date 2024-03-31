@@ -12,8 +12,9 @@ import {
 import { faker } from "@faker-js/faker";
 import { Line } from "react-chartjs-2";
 import { useState } from "react";
+import dynamic from "next/dynamic";
 
-export default function WeeklySalesChart() {
+const WeeklySalesChart = () => {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -52,9 +53,7 @@ export default function WeeklySalesChart() {
     datasets: [
       {
         label: "Sales",
-        data: labels.map(() =>
-          faker.datatype.number({ min: -1000, max: 1000 })
-        ),
+        data: labels.map(() => faker.number.int({ min: -1000, max: 1000 })),
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
@@ -70,9 +69,7 @@ export default function WeeklySalesChart() {
         datasets: [
           {
             label: "Sales",
-            data: labels.map(() =>
-              faker.datatype.number({ min: -1000, max: 1000 })
-            ),
+            data: labels.map(() => faker.number.int({ min: -1000, max: 1000 })),
             borderColor: "rgb(255, 99, 132)",
             backgroundColor: "rgba(255, 99, 132, 0.5)",
           },
@@ -87,9 +84,7 @@ export default function WeeklySalesChart() {
         datasets: [
           {
             label: "Orders",
-            data: labels.map(() =>
-              faker.datatype.number({ min: -1000, max: 1000 })
-            ),
+            data: labels.map(() => faker.number.int({ min: -1000, max: 1000 })),
             borderColor: "rgb(0, 137, 132)",
             backgroundColor: "rgba(0, 137, 132, 0.5)",
           },
@@ -101,11 +96,12 @@ export default function WeeklySalesChart() {
   const [chartToDisplay, setChartToDisplay] = useState(tabs[0].type);
 
   return (
-    <div className="bg-slate-700 p-8 rounded-lg">
-      <h2 className="text-xl font-bold mb-4">Weekly Sales Chart</h2>
+    <div className="dark:bg-slate-700 bg-slate-50 p-8 rounded-lg shadow-xl">
+      <h2 className="text-xl font-bold mb-4 text-slate-800 dark:text-slate-50">
+        Weekly Sales
+      </h2>
       <div className="p-4">
         {/* Tabs */}
-
         <div
           className="text-sm font-medium text-center text-gray-200 border-b border-gray-400
          dark:text-gray-400 dark:border-gray-700"
@@ -119,7 +115,7 @@ export default function WeeklySalesChart() {
                     className={
                       chartToDisplay == tab.type
                         ? "inline-block p-4 text-orange-600 border-b-2 border-orange-600 rounded-t-lg active dark:text-orange-500 dark:border-orange-500"
-                        : "inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-300 hover:border-gray-100 dark:hover:text-gray-100 "
+                        : "inline-block p-4 border-b-2 border-transparent rounded-t-lg text-slate-800 hover:text-gray-700 hover:border-gray-100 dark:hover:text-gray-100 "
                     }
                   >
                     {tab.title}
@@ -133,11 +129,13 @@ export default function WeeklySalesChart() {
         {/* Content to display */}
         {tabs.map((tab, i) => {
           if (chartToDisplay === tab.type) {
-            return <Line options={options} data={tab.data} />;
+            return <Line key={i} options={options} data={tab.data} />;
           }
           return null;
         })}
       </div>
     </div>
   );
-}
+};
+
+export default dynamic(() => Promise.resolve(WeeklySalesChart), { ssr: false });
