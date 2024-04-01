@@ -22,8 +22,8 @@ import React from "react";
 const Navbar = () => {
   return (
     <div
-      className="flex items-center justify-between bg-white dark:bg-slate-800 text-slate-50 h-20 px-8 py-8
-    fixed top-0 w-full left-60 z-50 pr-[20rem]"
+      className="flex items-center justify-between bg-white dark:bg-slate-800 text-slate-50 h-20 py-8
+    fixed top-0 w-full px-8 z-50 pr-[20rem]"
     >
       {/* Icon */}
       <button className="text-lime-700 dark:text-lime-500">
