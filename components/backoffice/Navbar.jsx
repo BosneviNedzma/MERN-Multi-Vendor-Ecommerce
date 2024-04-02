@@ -17,16 +17,23 @@ import {
 import ThemeSwitcherBtn from "../ThemeSwitcherBtn";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
-const Navbar = () => {
+const Navbar = ({ setShowSidebar, showSidebar }) => {
   return (
     <div
       className="flex items-center justify-between bg-white dark:bg-slate-800 text-slate-50 h-20 py-8
-    fixed top-0 w-full px-8 z-50 pr-[20rem]"
+    fixed top-0 w-full px-8 z-50 sm:pr-[20rem]"
     >
+      <Link href={"/dashboard"} className="sm:hidden">
+        ePijaca
+      </Link>
       {/* Icon */}
-      <button className="text-lime-700 dark:text-lime-500">
+      <button
+        onClick={() => setShowSidebar(!showSidebar)}
+        className="text-lime-700 dark:text-lime-500"
+      >
         <AlignJustify />
       </button>
       {/* 3 Icons */}
