@@ -13,10 +13,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning className="dark">
       <body className={inter.className}>
-        <Providers>
-        {children}
-        </Providers>
-        </body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
