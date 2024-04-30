@@ -2,7 +2,6 @@ import { UploadDropzone } from "@/lib/uploadthing";
 import { Pencil } from "lucide-react";
 import toast from "react-hot-toast";
 import Image from "next/image";
-import React from "react";
 
 export default function ImageInput({
   label,
