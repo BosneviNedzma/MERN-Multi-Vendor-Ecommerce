@@ -3,8 +3,10 @@ import { makePostRequest } from "@/lib/apiRequest";
 import { generateSlug } from "@/lib/generateSlug";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+
 import TextareaInput from "@/components/FormInputs/TextAreaInput";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
+import SelectInput from "@/components/FormInputs/SelectInput";
 import FormHeader from "@/components/backoffice/FormHeader";
 import ImageInput from "@/components/FormInputs/ImageInput";
 import TextInput from "@/components/FormInputs/TextInputs";
@@ -12,12 +14,33 @@ import TextInput from "@/components/FormInputs/TextInputs";
 export default function NewCategory() {
   const [imageUrl, setImageUrl] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const markets = [
+    {
+      id: 1,
+      title: "Sproutes Farmers Market",
+    },
+    {
+      id: 2,
+      title: "Cabbage Farmers Market",
+    },
+    {
+      id: 3,
+      title: "Carrot Farmers Market",
+    },
+    {
+      id: 4,
+      title: "Broccoli Farmers Market",
+    },
+  ];
+
   const {
     register,
     reset,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   async function onSubmit(data) {
     {
       /* 
@@ -36,6 +59,7 @@ export default function NewCategory() {
     makePostRequest(setLoading, "api/categories", data, "Category", reset);
     setImageUrl("");
   }
+
   return (
     <div>
       <FormHeader title="New category" />
@@ -50,6 +74,16 @@ export default function NewCategory() {
             name="title"
             register={register}
             errors={errors}
+            className="w-full"
+          />
+          <SelectInput
+            label="Select Market"
+            name="marketIds"
+            register={register}
+            errors={errors}
+            className="w-full"
+            options={markets}
+            multiple={true}
           />
           <TextareaInput
             label="Category Description"
