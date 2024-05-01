@@ -1,12 +1,12 @@
 "use client";
+import SubmitButton from "@/components/FormInputs/SubmitButton";
+import { generateCouponCode } from "@/lib/generateCouponCode";
 import { makePostRequest } from "@/lib/apiRequest";
-import { generateSlug } from "@/lib/generateSlug";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import SubmitButton from "@/components/FormInputs/SubmitButton";
+import ToggleInput from "@/components/FormInputs/ToggleInput";
 import FormHeader from "@/components/backoffice/FormHeader";
 import TextInput from "@/components/FormInputs/TextInputs";
-import { generateCouponCode } from "@/lib/generateCouponCode";
 
 export default function NewCoupon() {
   const [loading, setLoading] = useState(false);
@@ -17,7 +17,13 @@ export default function NewCoupon() {
     watch,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      isActive: true,
+    },
+  });
+
+  const isActive = watch("isActive");
 
   async function onSubmit(data) {
     {
@@ -56,6 +62,13 @@ export default function NewCoupon() {
             register={register}
             errors={errors}
             className="w-full"
+          />
+          <ToggleInput
+            label="Publish your Coupon"
+            name="isActive"
+            trueTitle="Active"
+            falseTitle="Draft"
+            register={register}
           />
         </div>
         <SubmitButton

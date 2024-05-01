@@ -7,6 +7,7 @@ import ArrayItemsInput from "@/components/FormInputs/ArrayItemsInput";
 import TextareaInput from "@/components/FormInputs/TextAreaInput";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
 import SelectInput from "@/components/FormInputs/SelectInput";
+import ToggleInput from "@/components/FormInputs/ToggleInput";
 import FormHeader from "@/components/backoffice/FormHeader";
 import ImageInput from "@/components/FormInputs/ImageInput";
 import TextInput from "@/components/FormInputs/TextInputs";
@@ -43,19 +44,23 @@ export default function NewProduct() {
   ];
   const [tags, setTags] = useState([]);
   const [loading, setLoading] = useState(false);
-  console.log(tags);
   const {
     register,
     reset,
+    watch,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      isActive: true,
+    },
+  });
+  const isActive = watch("isActive");
   async function onSubmit(data) {
     const slug = generateSlug(data.title);
     data.slug = slug;
     data.imageUrl = imageUrl;
     data.tags = tags;
-    console.log(data);
     makePostRequest(setLoading, "api/products", data, "Product", reset);
     setImageUrl("");
   }
@@ -128,12 +133,18 @@ export default function NewProduct() {
           />
           {/* Tags */}
           <ArrayItemsInput setItems={setTags} items={tags} itemTitle="Tag" />
-
           <TextareaInput
             label="Product Description"
             name="description"
             register={register}
             errors={errors}
+          />
+          <ToggleInput
+            label="Publish your Product"
+            name="isActive"
+            trueTitle="Active"
+            falseTitle="Draft"
+            register={register}
           />
         </div>
         <SubmitButton

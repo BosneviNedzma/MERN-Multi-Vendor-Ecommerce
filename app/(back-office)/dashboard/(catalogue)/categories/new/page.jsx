@@ -6,10 +6,12 @@ import { useState } from "react";
 
 import TextareaInput from "@/components/FormInputs/TextAreaInput";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
+import ToggleInput from "@/components/FormInputs/ToggleInput";
 import SelectInput from "@/components/FormInputs/SelectInput";
 import FormHeader from "@/components/backoffice/FormHeader";
 import ImageInput from "@/components/FormInputs/ImageInput";
 import TextInput from "@/components/FormInputs/TextInputs";
+import { Watch } from "lucide-react";
 
 export default function NewCategory() {
   const [imageUrl, setImageUrl] = useState("");
@@ -37,9 +39,16 @@ export default function NewCategory() {
   const {
     register,
     reset,
+    watch,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues:{
+      isActive: true,
+    }
+  });
+
+  const isActive = watch('isActive')
 
   async function onSubmit(data) {
     {
@@ -96,6 +105,13 @@ export default function NewCategory() {
             setImageUrl={setImageUrl}
             endpoint="categoryImageUploader"
             label="Category Image"
+          />
+          <ToggleInput
+            label="Publish your Category"
+            name="isActive"
+            trueTitle="Active"
+            falseTitle="Draft"
+            register={register}
           />
         </div>
         <SubmitButton
